@@ -1,1 +1,1 @@
-# skipgraph-go
+# Skip Graph Middleware in Go
