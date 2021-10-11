@@ -2,7 +2,7 @@ package network
 
 import "github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 
-// Underlay represents the underlying network for which skip graph node is interacting with. 
+// Underlay represents the underlying network for which skip graph node is interacting with.
 type Underlay interface {
 	// Start starts the networking layer.
 	//Start() <-chan interface{}
