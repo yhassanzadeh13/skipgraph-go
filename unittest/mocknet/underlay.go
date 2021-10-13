@@ -33,7 +33,7 @@ func (m *mockUnderlay) Start() <-chan interface{} {
 	ch := make(chan interface{})
 	go func() {
 		defer close(ch)
-		// implement something
+		// implement the start procedure
 	}()
 	return ch
 }
