@@ -31,12 +31,18 @@ func (m *mockUnderlay) Send(message messages.Message) error {
 }
 
 func (m *mockUnderlay) Start() <-chan interface{} {
-	//
 	ch := make(chan interface{})
 	go func() {
 		defer close(ch)
-
 		//	implement something
+	}()
+	return ch
+}
+func (m *mockUnderlay) Stop() <-chan interface{} {
+	ch := make(chan interface{})
+	go func() {
+		defer close(ch)
+		//	 implement the stop procedure
 	}()
 	return ch
 }
