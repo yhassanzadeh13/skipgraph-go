@@ -7,7 +7,6 @@ import (
 )
 
 type mockUnderlay struct {
-	// it behaves the same for all the sharing skip graph nodes
 	// there is only one handler per message type (but not per caller)
 	messageHandlers map[messages.MessageType]network.MessageHandler
 }
@@ -34,7 +33,7 @@ func (m *mockUnderlay) Start() <-chan interface{} {
 	ch := make(chan interface{})
 	go func() {
 		defer close(ch)
-		//	implement something
+		// implement something
 	}()
 	return ch
 }
@@ -42,7 +41,7 @@ func (m *mockUnderlay) Stop() <-chan interface{} {
 	ch := make(chan interface{})
 	go func() {
 		defer close(ch)
-		//	 implement the stop procedure
+		// implement the stop procedure
 	}()
 	return ch
 }
