@@ -11,6 +11,10 @@ type mockUnderlay struct {
 	messageHandlers map[messages.MessageType]network.MessageHandler
 }
 
+func newMockUnderlay(messageHandlers map[messages.MessageType]network.MessageHandler) *mockUnderlay {
+	return &mockUnderlay{messageHandlers: messageHandlers}
+}
+
 // SetMessageHandler determines the handler of a message based on its message type.
 func (m *mockUnderlay) SetMessageHandler(msgType messages.MessageType, handler network.MessageHandler) error {
 	m.messageHandlers[msgType] = handler
