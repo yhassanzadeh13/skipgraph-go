@@ -21,8 +21,12 @@ func TestUnderlay(t *testing.T) {
 		flag = true
 		return nil
 	}
-	mUnderlay.SetMessageHandler(mtype, f)
-	mUnderlay.Send(msg)
+	err := mUnderlay.SetMessageHandler(mtype, f)
+	require.True(t, (err == nil))
+
+	err = mUnderlay.Send(msg)
+	require.True(t, (err == nil))
+
 	// the handler is called
 	require.True(t, flag)
 }
