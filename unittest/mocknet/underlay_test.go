@@ -2,16 +2,22 @@ package mocknet
 
 import (
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
-	"github/yhassanzadeh13/skipgraph-go/network"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestUnderlay(t *testing.T) {
-	mUnderlay := newMockUnderlay(make(map[messages.MessageType]network.MessageHandler))
+	// construct an empty mocked underlay
+	mUnderlay := NewMockUnderlay()
+
+	//start
 	mUnderlay.Start()
+
+	// stop when the test terminates
 	defer mUnderlay.Stop()
+
+	// create a message type
 	mtype := messages.MessageType("input")
 	var payload interface{}
 	var msg = messages.Message{Type: mtype,

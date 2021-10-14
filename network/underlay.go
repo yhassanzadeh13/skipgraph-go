@@ -2,7 +2,6 @@ package network
 
 import (
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
-	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 )
 
 // Underlay represents the underlying network for which skip graph node is interacting with.
@@ -17,7 +16,7 @@ type Underlay interface {
 	SetMessageHandler(messages.MessageType, MessageHandler) error
 
 	// Send sends a message to a list of target recipients in the underlying network.
-	Send(interface{}, skipgraph.IdentifierList) error
+	Send(interface{}) error
 }
 
 type MessageHandler func(messages.Message) error
