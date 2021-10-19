@@ -1,7 +1,8 @@
-package mocknet
+package mocknet_test
 
 import (
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
+	"github/yhassanzadeh13/skipgraph-go/unittest/mocknet"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -9,7 +10,7 @@ import (
 
 func TestUnderlay(t *testing.T) {
 	// construct an empty mocked underlay
-	mUnderlay := NewMockUnderlay()
+	mUnderlay := mocknet.NewMockUnderlay()
 
 	//start
 	mUnderlay.Start()
@@ -19,9 +20,7 @@ func TestUnderlay(t *testing.T) {
 
 	// create a message type
 	mtype := messages.MessageType("input")
-	var payload interface{}
-	var msg = messages.Message{Type: mtype,
-		Payload: payload}
+	var msg = messages.Message{Type: mtype}
 	var flag bool = false
 	f := func(messages.Message) error {
 		flag = true
