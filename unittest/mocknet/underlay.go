@@ -20,8 +20,9 @@ func NewMockUnderlay() *MockUnderlay {
 // SetMessageHandler determines the handler of a message based on its message type.
 func (m *MockUnderlay) SetMessageHandler(msgType messages.MessageType, handler network.MessageHandler) error {
 	// check whether a handler exists for the supplied message type
-	if m.messageHandlers[msgType] != nil {
-		return fmt.Errorf("a handler exists for the attemoted message type")
+	_, ok := m.messageHandlers[msgType]
+	if ok {
+		return fmt.Errorf("a handler exists for the attemoted message type: %s", msgType)
 	}
 	m.messageHandlers[msgType] = handler
 	return nil
