@@ -3,6 +3,7 @@ package unittest
 import (
 	"fmt"
 	"github.com/stretchr/testify/require"
+	"sync"
 	"testing"
 	"time"
 )
@@ -29,4 +30,19 @@ func ChannelMustCloseWithinTimeout(t *testing.T, c <-chan interface{}, timeout t
 	case <-time.After(timeout):
 		require.Fail(t, fmt.Sprintf("channel did not close on time: %s", failureMsg))
 	}
+}
+
+// ChannelsMustCloseWithinTimeout is a test helper that fails the test if any of the given channels do not close prior to the given timeout.
+func ChannelsMustCloseWithinTimeout(t *testing.T, timeout time.Duration, failureMsg string, channels... <-chan interface{}) {
+	wg := sync.WaitGroup{}
+	wg.Add(len(channels))
+
+	for _, ch := range channels {
+		go func(ch <- chan interface{}) {
+			<-ch
+			wg.Done()
+		}(ch)
+	}
+
+	CallMustReturnWithinTimeout(t, wg.Wait, timeout, failureMsg)
 }

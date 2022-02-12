@@ -3,22 +3,31 @@ package mocknet
 import (
 	"fmt"
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
+	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 	"github/yhassanzadeh13/skipgraph-go/network"
+	"sync"
 )
 
 type MockUnderlay struct {
+	l sync.Mutex
 	// there is only one handler per message type (but not per caller)
-	messageHandlers map[messages.MessageType]network.MessageHandler
+	messageHandlers map[messages.Type]network.MessageHandler
+	stub            *NetworkStub
 }
 
 // NewMockUnderlay initializes an empty MockUnderlay and returns a pointer to it
-func NewMockUnderlay() *MockUnderlay {
-
-	return &MockUnderlay{messageHandlers: make(map[messages.MessageType]network.MessageHandler)}
+func newMockUnderlay(stub *NetworkStub) *MockUnderlay {
+	return &MockUnderlay{
+		stub:            stub,
+		messageHandlers: make(map[messages.Type]network.MessageHandler),
+	}
 }
 
 // SetMessageHandler determines the handler of a message based on its message type.
-func (m *MockUnderlay) SetMessageHandler(msgType messages.MessageType, handler network.MessageHandler) error {
+func (m *MockUnderlay) SetMessageHandler(msgType messages.Type, handler network.MessageHandler) error {
+	m.l.Lock()
+	defer m.l.Unlock()
+
 	// check whether a handler exists for the supplied message type
 	_, ok := m.messageHandlers[msgType]
 	if ok {
@@ -29,19 +38,11 @@ func (m *MockUnderlay) SetMessageHandler(msgType messages.MessageType, handler n
 }
 
 // Send sends a message to a list of target recipients in the underlying network.
-func (m *MockUnderlay) Send(message messages.Message) error {
-	// check the support of the supplied message
-	handler, ok := m.messageHandlers[message.Type]
-	if !ok {
-		return fmt.Errorf("no handler for message type: %s", message.Type)
-	}
+func (m *MockUnderlay) Send(msg messages.Message, target skipgraph.Identifier) error {
+	m.l.Lock()
+	defer m.l.Unlock()
 
-	// call the installed handler
-	err := handler(message)
-	if err != nil {
-		return fmt.Errorf("could not run the message handler: %w", err)
-	}
-	return nil
+	return m.stub.routeMessageTo(msg, target)
 }
 
 func (m *MockUnderlay) Start() <-chan interface{} {
