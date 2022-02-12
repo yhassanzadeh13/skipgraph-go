@@ -2,21 +2,23 @@ package mocknet_test
 
 import (
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
+	"github/yhassanzadeh13/skipgraph-go/unittest"
 	"github/yhassanzadeh13/skipgraph-go/unittest/mocknet"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestUnderlay(t *testing.T) {
 	// construct an empty mocked underlay
-	mUnderlay := mocknet.NewMockUnderlay()
+	u := mocknet.NewMockUnderlay()
 
 	//start
-	mUnderlay.Start()
+	unittest.ChannelMustCloseWithinTimeout(t, u.Start(), 100 * time.Millisecond, "could not start underlay on time")
 
 	// stop when the test terminates
-	defer mUnderlay.Stop()
+	defer u.Stop()
 
 	// create a message type
 	mtype := messages.MessageType("input")
@@ -26,10 +28,10 @@ func TestUnderlay(t *testing.T) {
 		flag = true
 		return nil
 	}
-	err := mUnderlay.SetMessageHandler(mtype, f)
+	err := u.SetMessageHandler(mtype, f)
 	require.True(t, (err == nil))
 
-	err = mUnderlay.Send(msg)
+	err = u.Send(msg)
 	require.True(t, (err == nil))
 
 	// the handler is called
