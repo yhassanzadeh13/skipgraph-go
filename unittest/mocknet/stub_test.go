@@ -25,8 +25,7 @@ func TestTwoUnderlays(t *testing.T) {
 
 	// starts underlay
 	unittest.ChannelsMustCloseWithinTimeout(t,
-		100 * time.Millisecond, "could not start underlays on time", u1.Start(), u2.Start())
-
+		100*time.Millisecond, "could not start underlays on time", u1.Start(), u2.Start())
 
 	// sets message handler at u1
 	received := false
@@ -37,7 +36,6 @@ func TestTwoUnderlays(t *testing.T) {
 		return nil
 	}
 	require.NoError(t, u1.SetMessageHandler(unittest.TestMessageType, f))
-
 
 	// sends message from u2 -> u1
 	msg := unittest.TestMessageFixture(t)
@@ -51,5 +49,5 @@ func TestTwoUnderlays(t *testing.T) {
 
 	// stops underlay
 	unittest.ChannelsMustCloseWithinTimeout(t,
-		100 * time.Millisecond, "could not stop underlay on time", u1.Stop(), u2.Stop())
+		100*time.Millisecond, "could not stop underlay on time", u1.Stop(), u2.Stop())
 }
