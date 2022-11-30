@@ -8,26 +8,34 @@ import (
 	"testing"
 )
 
+/**
+A utility module to generate random values of some certain type
+*/
+
 const TestMessageType = messages.Type("test-message")
 
-func TestMessageFixture(t *testing.T) *messages.Message{
+// TestMessageFixture generates a random Message
+func TestMessageFixture(t *testing.T) *messages.Message {
+
 	return &messages.Message{
-		Type:   TestMessageType,
+		Type:    TestMessageType,
 		Payload: RandomBytesFixture(t, 100),
 	}
 }
 
+// IdentifierFixture generates a random Identifier
 func IdentifierFixture(t *testing.T) skipgraph.Identifier {
 	var id skipgraph.Identifier
 	bytes := RandomBytesFixture(t, skipgraph.IdentifierSize)
 
-	for i := 0; i < skipgraph.IdentifierSize; i++{
+	for i := 0; i < skipgraph.IdentifierSize; i++ {
 		id[i] = bytes[i]
 	}
 
 	return id
 }
 
+// RandomBytesFixture generates a random byte array of the supplied size
 func RandomBytesFixture(t *testing.T, size int) []byte {
 	bytes := make([]byte, size)
 	n, err := rand.Read(bytes[:])
