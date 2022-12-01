@@ -49,19 +49,13 @@ func (m *MockUnderlay) Send(msg messages.Message, target skipgraph.Identifier) e
 // Start starts a MockUnderlay
 func (m *MockUnderlay) Start() <-chan interface{} {
 	ch := make(chan interface{})
-	go func() {
-		defer close(ch)
-		// implement the start procedure
-	}()
+	close(ch)
 	return ch
 }
 
 // Stop stops a MockUnderlay
 func (m *MockUnderlay) Stop() <-chan interface{} {
 	ch := make(chan interface{})
-	go func() {
-		defer close(ch)
-		// implement the stop procedure
-	}()
+	close(ch)
 	return ch
 }
