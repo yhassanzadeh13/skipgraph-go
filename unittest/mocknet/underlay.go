@@ -32,7 +32,7 @@ func (m *MockUnderlay) SetMessageHandler(msgType messages.Type, handler network.
 	// check whether a handler exists for the supplied message type
 	_, ok := m.messageHandlers[msgType]
 	if ok {
-		return fmt.Errorf("a handler exists for the attemoted message type: %s", msgType)
+		return fmt.Errorf("a handler exists for the attempted message type: %s", msgType)
 	}
 	m.messageHandlers[msgType] = handler
 	return nil
