@@ -33,12 +33,12 @@ func ChannelMustCloseWithinTimeout(t *testing.T, c <-chan interface{}, timeout t
 }
 
 // ChannelsMustCloseWithinTimeout is a test helper that fails the test if any of the given channels do not close prior to the given timeout.
-func ChannelsMustCloseWithinTimeout(t *testing.T, timeout time.Duration, failureMsg string, channels... <-chan interface{}) {
+func ChannelsMustCloseWithinTimeout(t *testing.T, timeout time.Duration, failureMsg string, channels ...<-chan interface{}) {
 	wg := sync.WaitGroup{}
 	wg.Add(len(channels))
 
 	for _, ch := range channels {
-		go func(ch <- chan interface{}) {
+		go func(ch <-chan interface{}) {
 			<-ch
 			wg.Done()
 		}(ch)

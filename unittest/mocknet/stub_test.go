@@ -15,12 +15,15 @@ func TestTwoUnderlays(t *testing.T) {
 	// construct an empty mocked underlay
 	stub := mocknet.NewNetworkStub()
 
+	// create a random identifier
 	id1 := unittest.IdentifierFixture(t)
 	u1 := stub.NewMockUnderlay(t, id1)
 
+	// create a random identifier
 	id2 := unittest.IdentifierFixture(t)
 	u2 := stub.NewMockUnderlay(t, id2)
 
+	// make sure they are not equal
 	require.NotEqual(t, id1, id2)
 
 	// starts underlay

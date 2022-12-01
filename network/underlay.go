@@ -21,4 +21,5 @@ type Underlay interface {
 	Send(messages.Message, skipgraph.Identifier) error
 }
 
+// MessageHandler processes a Message and performs some actions
 type MessageHandler func(messages.Message) error

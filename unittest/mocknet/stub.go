@@ -9,17 +9,20 @@ import (
 	"testing"
 )
 
+// NetworkStub acts as a router to connect a set of MockUnderlay
+// it needs to be locked using its l field before being accessed
 type NetworkStub struct {
-	l sync.Mutex
+	l         sync.Mutex
 	underlays map[skipgraph.Identifier]*MockUnderlay
 }
 
-func NewNetworkStub() *NetworkStub{
+// NewNetworkStub creates an empty NetworkStub
+func NewNetworkStub() *NetworkStub {
 	return &NetworkStub{underlays: make(map[skipgraph.Identifier]*MockUnderlay)}
 }
 
-// NewMockUnderlay creates and returns a mock underlay connected to this network stub.
-func (n *NetworkStub) NewMockUnderlay(t *testing.T, id skipgraph.Identifier) *MockUnderlay{
+// NewMockUnderlay creates and returns a mock underlay connected to this network stub for a non-existing Identifier.
+func (n *NetworkStub) NewMockUnderlay(t *testing.T, id skipgraph.Identifier) *MockUnderlay {
 	n.l.Lock()
 	defer n.l.Unlock()
 
@@ -54,6 +57,3 @@ func (n *NetworkStub) routeMessageTo(msg messages.Message, target skipgraph.Iden
 
 	return nil
 }
-
-
-

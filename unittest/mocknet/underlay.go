@@ -8,6 +8,7 @@ import (
 	"sync"
 )
 
+// MockUnderlay keeps data necessary for processing of incoming network messages in a mock network
 type MockUnderlay struct {
 	l sync.Mutex
 	// there is only one handler per message type (but not per caller)
@@ -45,6 +46,7 @@ func (m *MockUnderlay) Send(msg messages.Message, target skipgraph.Identifier) e
 	return m.stub.routeMessageTo(msg, target)
 }
 
+// Start starts a MockUnderlay
 func (m *MockUnderlay) Start() <-chan interface{} {
 	ch := make(chan interface{})
 	go func() {
@@ -53,6 +55,8 @@ func (m *MockUnderlay) Start() <-chan interface{} {
 	}()
 	return ch
 }
+
+// Stop stops a MockUnderlay
 func (m *MockUnderlay) Stop() <-chan interface{} {
 	ch := make(chan interface{})
 	go func() {
