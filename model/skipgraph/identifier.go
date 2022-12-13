@@ -3,6 +3,7 @@ package skipgraph
 import (
 	"bytes"
 	"encoding/hex"
+	"fmt"
 )
 
 const IdentifierSize = 32
@@ -30,4 +31,19 @@ func (i Identifier) compare(other Identifier) string {
 	default:
 		return CompareEqaul
 	}
+}
+
+// ToIdentifier converts s to an Identifier
+// returns error if length of s is more than Identifier's length i.e., 32 bytes
+func ToIdentifier(s []byte) (Identifier, error) {
+	res := Identifier{0}
+	if len(s) > 32 {
+		return res, fmt.Errorf("input length must be at most 32 bytes; found: %d", len(s))
+	}
+	index := 31
+	for i := len(s) - 1; i >= 0; i-- {
+		res[index] = s[i]
+		index--
+	}
+	return res, nil
 }
