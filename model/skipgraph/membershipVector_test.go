@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// TestMembershipVectorCompare tests CommonPrefix method
 func TestMembershipVectorCompare(t *testing.T) {
 	// create two membershipVectors with 32 * 8 common prefix
 	v1 := MembershipVector{0}
