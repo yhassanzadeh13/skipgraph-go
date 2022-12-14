@@ -7,12 +7,12 @@ import (
 
 type MembershipVector [32]byte
 
-// String stringifies a MembershipVector
+// String returns hex encoding of a MembershipVector
 func (m MembershipVector) String() string {
 	return hex.EncodeToString(m[:])
 }
 
-// ToBinaryString returns binary representation of MembershipVector
+// ToBinaryString returns binary representation of a MembershipVector
 func (m MembershipVector) ToBinaryString() string {
 	var s string
 	for i := 0; i < len(m); i++ {
@@ -21,6 +21,7 @@ func (m MembershipVector) ToBinaryString() string {
 	return s
 }
 
+// ToBinaryString returns binary representation of a byte value
 func ToBinaryString(b byte) string {
 	var s string
 	for j := 0; j < 8; j++ {
@@ -36,7 +37,7 @@ func ToBinaryString(b byte) string {
 	return s
 }
 
-// CommonPrefix returns common
+// CommonPrefix returns the longest common bit prefix of the supplied MembershipVectors
 func (m MembershipVector) CommonPrefix(m2 MembershipVector) int {
 	// convert to bit string
 	s1 := m.ToBinaryString()
@@ -50,7 +51,7 @@ func (m MembershipVector) CommonPrefix(m2 MembershipVector) int {
 	return 32 * 8
 }
 
-// ToMembershipVector converts s to an MembershipVector
+// ToMembershipVector converts a byte slice to a MembershipVector
 // returns error if length of s is more than MembershipVector's length i.e., 32 bytes
 func ToMembershipVector(s []byte) (MembershipVector, error) {
 	res := MembershipVector{0}
