@@ -17,5 +17,5 @@ func TestCompare(t *testing.T) {
 
 	require.Equal(t, skipgraph.CompareLess, i1.Compare(i2))
 	require.Equal(t, skipgraph.CompareGreater, i2.Compare(i1))
-	require.Equal(t, skipgraph.CompareEqaul, i1.Compare(i1))
+	require.Equal(t, skipgraph.CompareEqual, i1.Compare(i1))
 }

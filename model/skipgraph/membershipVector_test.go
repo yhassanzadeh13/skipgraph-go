@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// TestMembershipVectorCompare tests CommonPrefix method
+// TestMembershipVectorCompare tests CommonPrefix method.
 func TestMembershipVectorCompare(t *testing.T) {
 	// create two membershipVectors with 32 * 8 common prefix
 	v1 := skipgraph.MembershipVector{0}
@@ -25,7 +25,7 @@ func TestMembershipVectorCompare(t *testing.T) {
 	require.Equal(t, 6, res)
 }
 
-// TestToBinaryString tests correctness of ToBinaryString
+// TestToBinaryString tests correctness of ToBinaryString.
 func TestToBinaryString(t *testing.T) {
 	v1 := byte(1) // 00000001
 	s1 := skipgraph.ToBinaryString(v1)

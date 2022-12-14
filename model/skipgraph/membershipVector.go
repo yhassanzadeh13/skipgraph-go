@@ -5,7 +5,9 @@ import (
 	"fmt"
 )
 
-type MembershipVector [32]byte
+const membershipVectorSize = 32
+
+type MembershipVector [membershipVectorSize]byte
 
 // String returns hex encoding of a MembershipVector
 func (m MembershipVector) String() string {
@@ -48,17 +50,17 @@ func (m MembershipVector) CommonPrefix(m2 MembershipVector) int {
 			return i
 		}
 	}
-	return 32 * 8
+	return membershipVectorSize * 8
 }
 
 // ToMembershipVector converts a byte slice to a MembershipVector
-// returns error if length of s is more than MembershipVector's length i.e., 32 bytes
+// returns error if length of s is more than MembershipVector's length i.e., membershipVectorSize bytes
 func ToMembershipVector(s []byte) (MembershipVector, error) {
 	res := MembershipVector{0}
-	if len(s) > 32 {
-		return res, fmt.Errorf("input length must be at most 32 bytes; found: %d", len(s))
+	if len(s) > membershipVectorSize {
+		return res, fmt.Errorf("input length must be at most %d bytes; found: %d", membershipVectorSize, len(s))
 	}
-	index := 31
+	index := membershipVectorSize - 1
 	for i := len(s) - 1; i >= 0; i-- {
 		res[index] = s[i]
 		index--
