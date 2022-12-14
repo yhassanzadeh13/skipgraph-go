@@ -7,7 +7,7 @@ import (
 )
 
 // TestMembershipVectorCompare tests CommonPrefix method.
-func TestMembershipVectorCompare(t *testing.T) {
+func TestMembershipVector_CommonPrefix(t *testing.T) {
 	// create two membershipVectors with 32 * 8 common prefix
 	v1 := skipgraph.MembershipVector{0}
 	res := v1.CommonPrefix(v1)
@@ -42,4 +42,21 @@ func TestToBinaryString(t *testing.T) {
 	v4 := byte(65) // 01000001
 	s4 := skipgraph.ToBinaryString(v4)
 	require.Equal(t, "01000001", s4)
+}
+
+func TestToMembershipVector(t *testing.T) {
+	// check a valid conversation
+	v1 := []byte{0}
+	v1[0] = 255
+	m, err := skipgraph.ToMembershipVector(v1)
+	require.NoError(t, err)
+	require.Equal(t, skipgraph.MembershipVectorSize, len(m))
+	// check zero leading is added and the last byte is equal to 255
+	require.Equal(t, uint8(255), m[skipgraph.MembershipVectorSize-1])
+
+	// check invalid input
+	v2 := [33]byte{1}
+	_, err2 := skipgraph.ToMembershipVector(v2[:])
+	require.Error(t, err2)
+
 }
