@@ -20,8 +20,8 @@ func (i Identifier) String() string {
 	return hex.EncodeToString(i[:])
 }
 
-// compare
-func (i Identifier) compare(other Identifier) string {
+// Compare
+func (i Identifier) Compare(other Identifier) string {
 	cmp := bytes.Compare(i[:], other[:])
 	switch cmp {
 	case 1:
