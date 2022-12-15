@@ -23,7 +23,7 @@ type LookupTable struct {
 func (l *LookupTable) AddEntry(dir Direction, lev int64, ident Identity) error {
 	// validate the level value
 	if lev >= maxLookupTableLevel {
-		return fmt.Errorf("position is larger than the max lookup table entry number: %d", l)
+		return fmt.Errorf("position is larger than the max lookup table entry number: %d", lev)
 	}
 
 	switch dir {
@@ -40,7 +40,7 @@ func (l *LookupTable) AddEntry(dir Direction, lev int64, ident Identity) error {
 
 // GetEntry returns the lth left/right neighbor in the lookup table depending on the dir.
 // lev runs from 0...maxLookupTableLevel-1.
-func (l LookupTable) GetEntry(dir Direction, lev int64) (Identity, error) {
+func (l *LookupTable) GetEntry(dir Direction, lev int64) (Identity, error) {
 	res := Identity{}
 
 	// validate the level value
