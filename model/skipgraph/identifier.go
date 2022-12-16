@@ -35,15 +35,31 @@ func (i Identifier) Compare(other Identifier) string {
 	}
 }
 
-// ToIdentifier converts s to an Identifier.
-// returns error if the length of s is more than Identifier's length i.e., 32 bytes.
-func ToIdentifier(s []byte) (Identifier, error) {
+// ToIdentifier converts a byte slice b to an Identifier.
+// returns error if the length of b is more than Identifier's length i.e., 32 bytes.
+func ToIdentifier(b []byte) (Identifier, error) {
 	res := Identifier{0}
-	if len(s) > 32 {
-		return res, fmt.Errorf("input length must be at most 32 bytes; found: %d", len(s))
+	if len(b) > 32 {
+		return res, fmt.Errorf("input length must be at most 32 bytes; found: %d", len(b))
 	}
 	index := 31
-	for i := len(s) - 1; i >= 0; i-- {
+	for i := len(b) - 1; i >= 0; i-- {
+		res[index] = b[i]
+		index--
+	}
+	return res, nil
+}
+
+// StringToIdentifier converts a string to an Identifier.
+// returns error if the byte length of the string s is more than Identifier's length i.e., 32 bytes.
+func StringToIdentifier(s string) (Identifier, error) {
+	b := []byte(s)
+	res := Identifier{0}
+	if len(b) > 32 {
+		return res, fmt.Errorf("input length must be at most 32 bytes; found: %d", len(b))
+	}
+	index := 31
+	for i := len(b) - 1; i >= 0; i-- {
 		res[index] = s[i]
 		index--
 	}
