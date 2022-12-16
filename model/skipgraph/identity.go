@@ -40,3 +40,11 @@ func (i *Identity) SetAddr(addr model.Address) {
 	// TODO validation of the id may be needed
 	i.addr = addr
 }
+
+func NewIdentity(id Identifier, mv MembershipVector, addr model.Address) Identity {
+	i := Identity{}
+	i.SetMemVector(mv)
+	i.SetAddr(addr)
+	i.SetId(id)
+	return i
+}
