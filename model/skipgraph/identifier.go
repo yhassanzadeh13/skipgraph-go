@@ -60,7 +60,7 @@ func StringToIdentifier(s string) (Identifier, error) {
 	}
 	index := 31
 	for i := len(b) - 1; i >= 0; i-- {
-		res[index] = s[i]
+		res[index] = b[i]
 		index--
 	}
 	return res, nil
