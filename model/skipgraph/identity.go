@@ -9,7 +9,7 @@ type Identity struct {
 }
 
 // getIdentifier returns the Identifier field.
-func (i Identity) getIdentifier() Identifier {
+func (i Identity) GetIdentifier() Identifier {
 	return i.id
 }
 
