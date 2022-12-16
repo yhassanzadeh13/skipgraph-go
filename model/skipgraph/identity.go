@@ -9,16 +9,34 @@ type Identity struct {
 }
 
 // getIdentifier returns the Identifier field.
-func (id Identity) getIdentifier() Identifier {
-	return id.id
+func (i Identity) getIdentifier() Identifier {
+	return i.id
 }
 
 // GetMembershipVector returns the MembershipVector field.
-func (id Identity) GetMembershipVector() MembershipVector {
-	return id.memVector
+func (i Identity) GetMembershipVector() MembershipVector {
+	return i.memVector
 }
 
 // GetAddress returns the Address field.
-func (id Identity) GetAddress() model.Address {
-	return id.addr
+func (i Identity) GetAddress() model.Address {
+	return i.addr
+}
+
+// SetId sets Identifier
+func (i *Identity) SetId(id Identifier) {
+	// TODO validation of the id may be needed
+	i.id = id
+}
+
+// SetMemVector sets membershipVector
+func (i *Identity) SetMemVector(mv MembershipVector) {
+	// TODO validation of the id may be needed
+	i.memVector = mv
+}
+
+// SetAddr sets address
+func (i *Identity) SetAddr(addr model.Address) {
+	// TODO validation of the id may be needed
+	i.addr = addr
 }
