@@ -3,7 +3,7 @@ package skipgraph
 import "fmt"
 
 // maxLookupTableSize indicates the upper bound for the number of levels in a SkipGraph LookupTable.
-const maxLookupTableLevel = IdentifierSize * 8
+const MaxLookupTableLevel = IdentifierSize * 8
 
 type Direction string
 
@@ -14,15 +14,15 @@ const (
 
 // LookupTable corresponds to a SkipGraph node's lookup table.
 type LookupTable struct {
-	rightNeighbors [maxLookupTableLevel]Identity
-	leftNeighbors  [maxLookupTableLevel]Identity
+	rightNeighbors [MaxLookupTableLevel]Identity
+	leftNeighbors  [MaxLookupTableLevel]Identity
 }
 
 // AddEntry inserts the supplied Identity in the lth level of lookup table either as the left or right neighbor depending on the dir.
-// lev runs from 0...maxLookupTableLevel-1.
+// lev runs from 0...MaxLookupTableLevel-1.
 func (l *LookupTable) AddEntry(dir Direction, lev int64, ident Identity) error {
 	// validate the level value
-	if lev >= maxLookupTableLevel {
+	if lev >= MaxLookupTableLevel {
 		return fmt.Errorf("position is larger than the max lookup table entry number: %d", lev)
 	}
 
@@ -39,12 +39,12 @@ func (l *LookupTable) AddEntry(dir Direction, lev int64, ident Identity) error {
 }
 
 // GetEntry returns the lth left/right neighbor in the lookup table depending on the dir.
-// lev runs from 0...maxLookupTableLevel-1.
+// lev runs from 0...MaxLookupTableLevel-1.
 func (l *LookupTable) GetEntry(dir Direction, lev int64) (Identity, error) {
 	res := Identity{}
 
 	// validate the level value
-	if lev >= maxLookupTableLevel {
+	if lev >= MaxLookupTableLevel {
 		return res, fmt.Errorf("supplied level is larger than the max number of levels: %d", lev)
 	}
 	switch dir {
