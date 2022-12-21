@@ -70,3 +70,19 @@ func ToMembershipVector(s []byte) (MembershipVector, error) {
 	}
 	return res, nil
 }
+
+// StringToMembershipVector converts a string to a MembershipVector.
+// returns error if the byte length of the string is more than MembershipVector's length i.e., MembershipVectorSize bytes.
+func StringToMembershipVector(s string) (MembershipVector, error) {
+	b := []byte(s)
+	res := MembershipVector{0}
+	if len(b) > MembershipVectorSize {
+		return res, fmt.Errorf("input length must be at most %d bytes; found: %d", MembershipVectorSize, len(b))
+	}
+	index := MembershipVectorSize - 1
+	for i := len(b) - 1; i >= 0; i-- {
+		res[index] = b[i]
+		index--
+	}
+	return res, nil
+}
