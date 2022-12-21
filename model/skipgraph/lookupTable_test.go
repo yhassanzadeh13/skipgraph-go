@@ -32,6 +32,7 @@ func TestLookupTable_AddEntry(t *testing.T) {
 	require.Error(t, err)
 }
 
+// TestLookupTable_OverWriteLeftEntry test the overwriting of left entry in the lookup table.
 func TestLookupTable_OverWriteLeftEntry(t *testing.T) {
 	// create an empty lookup table
 	lt := skipgraph.LookupTable{}
@@ -58,6 +59,7 @@ func TestLookupTable_OverWriteLeftEntry(t *testing.T) {
 	require.Equal(t, identity1, retIdentity)
 }
 
+// TestLookupTable_OverWriteRightEntry test the overwriting of right entry in the lookup table.
 func TestLookupTable_OverWriteRightEntry(t *testing.T) {
 	// create an empty lookup table
 	lt := skipgraph.LookupTable{}
