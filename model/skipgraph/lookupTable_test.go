@@ -7,6 +7,7 @@ import (
 	"testing"
 )
 
+// TestLookupTable_AddEntry test the AddEntry method of LookupTable.
 func TestLookupTable_AddEntry(t *testing.T) {
 	// create an empty lookup table
 	lt := skipgraph.LookupTable{}
@@ -31,6 +32,7 @@ func TestLookupTable_AddEntry(t *testing.T) {
 	require.Error(t, err)
 }
 
+// TestLookupTable_GetEntry test the GetEntry method of LookupTable.
 func TestLookupTable_GetEntry(t *testing.T) {
 	// create an identity
 	identity := unittest.IdentityFixture(t)
