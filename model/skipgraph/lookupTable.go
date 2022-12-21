@@ -23,17 +23,17 @@ type LookupTable struct {
 
 // AddEntry inserts the supplied Identity in the lth level of lookup table either as the left or right neighbor depending on the dir.
 // lev runs from 0...MaxLookupTableLevel-1.
-func (l *LookupTable) AddEntry(dir Direction, lev int64, ident Identity) error {
+func (l *LookupTable) AddEntry(dir Direction, level int64, identity Identity) error {
 	// validate the level value
-	if lev >= MaxLookupTableLevel {
-		return fmt.Errorf("position is larger than the max lookup table entry number: %d", lev)
+	if level >= MaxLookupTableLevel {
+		return fmt.Errorf("position is larger than the max lookup table entry number: %d", level)
 	}
 
 	switch dir {
 	case RightDirection:
-		l.rightNeighbors[lev] = ident
+		l.rightNeighbors[level] = identity
 	case LeftDirection:
-		l.leftNeighbors[lev] = ident
+		l.leftNeighbors[level] = identity
 	default:
 		return fmt.Errorf("invalid direction: %s", dir)
 	}

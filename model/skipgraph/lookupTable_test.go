@@ -32,6 +32,58 @@ func TestLookupTable_AddEntry(t *testing.T) {
 	require.Error(t, err)
 }
 
+func TestLookupTable_OverWriteLeftEntry(t *testing.T) {
+	// create an empty lookup table
+	lt := skipgraph.LookupTable{}
+
+	// create a random identity
+	identity := unittest.IdentityFixture(t)
+
+	// add the identity in a valid position
+	err := lt.AddEntry(skipgraph.LeftDirection, 0, identity)
+	require.NoError(t, err)
+
+	// create another random identity
+	identity1 := unittest.IdentityFixture(t)
+
+	// check the new identity is not equal to the previous one
+	require.NotEqual(t, identity1, identity)
+
+	// overwrite the previous entry with the new identity
+	err = lt.AddEntry(skipgraph.LeftDirection, 0, identity1)
+	require.NoError(t, err)
+
+	// check that the new identity has overwritten the previous one
+	retIdentity, err := lt.GetEntry(skipgraph.LeftDirection, 0)
+	require.Equal(t, identity1, retIdentity)
+}
+
+func TestLookupTable_OverWriteRightEntry(t *testing.T) {
+	// create an empty lookup table
+	lt := skipgraph.LookupTable{}
+
+	// create a random identity
+	identity := unittest.IdentityFixture(t)
+
+	// add the identity in a valid position
+	err := lt.AddEntry(skipgraph.RightDirection, 0, identity)
+	require.NoError(t, err)
+
+	// create another random identity
+	identity1 := unittest.IdentityFixture(t)
+
+	// check the new identity is not equal to the previous one
+	require.NotEqual(t, identity1, identity)
+
+	// overwrite the previous entry with the new identity
+	err = lt.AddEntry(skipgraph.RightDirection, 0, identity1)
+	require.NoError(t, err)
+
+	// check that the new identity has overwritten the previous one
+	retIdentity, err := lt.GetEntry(skipgraph.RightDirection, 0)
+	require.Equal(t, identity1, retIdentity)
+}
+
 // TestLookupTable_GetEntry test the GetEntry method of LookupTable.
 func TestLookupTable_GetEntry(t *testing.T) {
 	// create an identity
