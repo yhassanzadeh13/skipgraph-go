@@ -5,11 +5,14 @@ import "fmt"
 // MaxLookupTableLevel indicates the upper bound for the number of levels in a SkipGraph LookupTable.
 const MaxLookupTableLevel = IdentifierSize * 8
 
+// Direction is an enum type for the direction of a neighbor in the lookup table.
 type Direction string
 
 const (
+	// RightDirection	indicates the right direction in the lookup table.
 	RightDirection = Direction("right")
-	LeftDirection  = Direction("left")
+	// LeftDirection	indicates the left direction in the lookup table.
+	LeftDirection = Direction("left")
 )
 
 // LookupTable corresponds to a SkipGraph node's lookup table.
