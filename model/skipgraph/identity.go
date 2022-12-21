@@ -36,18 +36,18 @@ func (i Identity) GetAddress() model.Address {
 
 // SetId sets Identifier.
 func (i *Identity) SetId(id Identifier) {
-	// TODO validation of the id may be needed
+	// TODO validation of the id may be needed.
 	i.id = id
 }
 
 // SetMemVector sets membershipVector.
 func (i *Identity) SetMemVector(mv MembershipVector) {
-	// TODO validation of the id may be needed
+	// TODO validation of the membershipVector mv may be needed.
 	i.memVector = mv
 }
 
 // SetAddr sets address.
 func (i *Identity) SetAddr(addr model.Address) {
-	// TODO validation of the id may be needed
+	// TODO validation of the addr may be needed.
 	i.addr = addr
 }
