@@ -27,7 +27,7 @@ func TestLookupTable_AddEntry(t *testing.T) {
 	require.Error(t, err)
 
 	// add an entry with wrong direction
-	err = lt.AddEntry(skipgraph.Direction("no where"), skipgraph.MaxLookupTableLevel, identity)
+	err = lt.AddEntry(skipgraph.Direction("no where"), 0, identity)
 	require.Error(t, err)
 }
 
@@ -41,7 +41,7 @@ func TestLookupTable_GetEntry(t *testing.T) {
 	var lt skipgraph.LookupTable
 
 	// add the identity as a left neighbor into the lookup table
-	err := lt.AddEntry(skipgraph.LeftDirection, 12, identity)
+	err := lt.AddEntry(skipgraph.LeftDirection, 0, identity)
 	require.NoError(t, err)
 
 	// add the identity as a right neighbor into the lookup table
@@ -49,11 +49,19 @@ func TestLookupTable_GetEntry(t *testing.T) {
 	require.NoError(t, err)
 
 	// check that the inserted identity is retrievable
-	retIdentity, err := lt.GetEntry(skipgraph.LeftDirection, 12)
+	retIdentity, err := lt.GetEntry(skipgraph.LeftDirection, 0)
 	require.Equal(t, identity, retIdentity)
 
 	// check that the inserted identity is retrievable
 	retIdentity1, err := lt.GetEntry(skipgraph.RightDirection, 0)
 	require.Equal(t, identity1, retIdentity1)
+
+	// access a wrong level
+	_, err = lt.GetEntry(skipgraph.RightDirection, skipgraph.MaxLookupTableLevel)
+	require.Error(t, err)
+
+	// access a wrong direction
+	_, err = lt.GetEntry(skipgraph.Direction("no where"), 0)
+	require.Error(t, err)
 
 }
