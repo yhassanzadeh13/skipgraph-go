@@ -14,9 +14,10 @@ import (
 A utility module to generate random values of some certain type
 */
 
+// TestMessageType  is a random message type.
 const TestMessageType = messages.Type("test-message")
 
-// TestMessageFixture generates a random Message
+// TestMessageFixture generates a random Message.
 func TestMessageFixture(t *testing.T) *messages.Message {
 
 	return &messages.Message{
@@ -37,7 +38,7 @@ func IdentifierFixture(t *testing.T) skipgraph.Identifier {
 	return id
 }
 
-// RandomBytesFixture generates a random byte array of the supplied size
+// RandomBytesFixture generates a random byte array of the supplied size.
 func RandomBytesFixture(t *testing.T, size int) []byte {
 	bytes := make([]byte, size)
 	n, err := rand.Read(bytes[:])
@@ -49,7 +50,7 @@ func RandomBytesFixture(t *testing.T, size int) []byte {
 	return bytes
 }
 
-// MembershipVectorFixture creates and returns a random MemberShipVector
+// MembershipVectorFixture creates and returns a random MemberShipVector.
 func MembershipVectorFixture(t *testing.T) skipgraph.MembershipVector {
 	bytes := RandomBytesFixture(t, skipgraph.MembershipVectorSize)
 
@@ -61,7 +62,7 @@ func MembershipVectorFixture(t *testing.T) skipgraph.MembershipVector {
 	return mv
 }
 
-// returns an Address on localhost with a random port number
+// AddressFixture returns an Address on localhost with a random port number.
 func AddressFixture(t *testing.T) model.Address {
 	// pick a random port
 	port := strconv.Itoa(rand.Intn(65535))
@@ -69,6 +70,8 @@ func AddressFixture(t *testing.T) model.Address {
 	return addr
 
 }
+
+// IdentityFixture generates a random Identity with an address on localhost.
 func IdentityFixture(t *testing.T) skipgraph.Identity {
 	id := IdentifierFixture(t)
 	memVec := MembershipVectorFixture(t)

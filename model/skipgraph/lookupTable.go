@@ -2,7 +2,7 @@ package skipgraph
 
 import "fmt"
 
-// maxLookupTableSize indicates the upper bound for the number of levels in a SkipGraph LookupTable.
+// MaxLookupTableLevel indicates the upper bound for the number of levels in a SkipGraph LookupTable.
 const MaxLookupTableLevel = IdentifierSize * 8
 
 type Direction string
