@@ -41,6 +41,7 @@ func (i *Identity) SetAddr(addr model.Address) {
 	i.addr = addr
 }
 
+// NewIdentity constructs and returns an Identity
 func NewIdentity(id Identifier, mv MembershipVector, addr model.Address) Identity {
 	i := Identity{}
 	i.SetMemVector(mv)
