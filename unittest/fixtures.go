@@ -1,10 +1,12 @@
 package unittest
 
 import (
-	"crypto/rand"
 	"github.com/stretchr/testify/require"
+	"github/yhassanzadeh13/skipgraph-go/model"
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
 	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
+	"math/rand"
+	"strconv"
 	"testing"
 )
 
@@ -57,4 +59,20 @@ func MembershipVectorFixture(t *testing.T) skipgraph.MembershipVector {
 	}
 
 	return mv
+}
+
+// returns an Address on localhost with a random port number
+func AddressFixture(t *testing.T) model.Address {
+	// pick a random port
+	port := strconv.Itoa(rand.Intn(65535))
+	addr := model.NewAddress("localhost", port)
+	return addr
+
+}
+func IdentityFixture(t *testing.T) skipgraph.Identity {
+	id := IdentifierFixture(t)
+	memVec := MembershipVectorFixture(t)
+	addr := AddressFixture(t)
+	identity := skipgraph.NewIdentity(id, memVec, addr)
+	return identity
 }
