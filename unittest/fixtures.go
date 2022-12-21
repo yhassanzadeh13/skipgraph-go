@@ -46,3 +46,15 @@ func RandomBytesFixture(t *testing.T, size int) []byte {
 
 	return bytes
 }
+
+// MembershipVectorFixture creates and returns a random MemberShipVector
+func MembershipVectorFixture(t *testing.T) skipgraph.MembershipVector {
+	bytes := RandomBytesFixture(t, skipgraph.MembershipVectorSize)
+
+	var mv skipgraph.MembershipVector
+	for i := 0; i < len(bytes); i++ {
+		mv[i] = bytes[i]
+	}
+
+	return mv
+}
