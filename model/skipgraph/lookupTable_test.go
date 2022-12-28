@@ -129,8 +129,14 @@ func TestLookupTable_Concurrency(t *testing.T) {
 	// create an empty lookup table
 	lt := skipgraph.LookupTable{}
 
+	// number of items to be added to the lookup table
 	addCount := 2
+	// number of items to be retrieved from the lookup table
 	getCount := 2
+
+	// the number of retrieved items should not exceed the number of added items
+	require.LessOrEqual(t, getCount, addCount)
+
 	wg := sync.WaitGroup{}
 	wg.Add(addCount + getCount)
 
