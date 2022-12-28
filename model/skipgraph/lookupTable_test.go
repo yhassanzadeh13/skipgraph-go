@@ -139,7 +139,7 @@ func TestLookupTable_Concurrency(t *testing.T) {
 		go func() {
 			defer wg.Done()
 			identity := unittest.IdentityFixture(t)
-			err := lt.AddEntry(skipgraph.LeftDirection, 0, identity)
+			err := lt.AddEntry(skipgraph.LeftDirection, skipgraph.Level(i), identity)
 			require.NoError(t, err)
 		}()
 	}
@@ -147,7 +147,7 @@ func TestLookupTable_Concurrency(t *testing.T) {
 		// retrieve some identities concurrently from the lookup table
 		go func() {
 			defer wg.Done()
-			_, err := lt.GetEntry(skipgraph.RightDirection, 0)
+			_, err := lt.GetEntry(skipgraph.LeftDirection, skipgraph.Level(i))
 			require.NoError(t, err)
 		}()
 	}
