@@ -158,7 +158,7 @@ func TestLookupTable_Concurrency(t *testing.T) {
 		}()
 	}
 
-	// check whether all the routines got finished
+	// check whether all the routines are finished
 	// wait 2 milliseconds for each routine to finish
 	unittest.CallMustReturnWithinTimeout(t, wg.Wait, time.Duration((getCount+addCount)*2)*time.Millisecond, "concurrent access to lookup table failed")
 }
