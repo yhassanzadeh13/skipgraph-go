@@ -4,7 +4,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 	"github/yhassanzadeh13/skipgraph-go/unittest"
+	"sync"
 	"testing"
+	"time"
 )
 
 // TestLookupTable_AddEntry test the AddEntry method of LookupTable.
@@ -120,4 +122,43 @@ func TestLookupTable_GetEntry(t *testing.T) {
 	_, err = lt.GetEntry(skipgraph.Direction("no where"), 0)
 	require.Error(t, err)
 
+}
+
+// TestLookupTable_GetEntryConcurrent test the concurrent access to the lookup table.
+func TestLookupTable_Concurrency(t *testing.T) {
+	// create an empty lookup table
+	lt := skipgraph.LookupTable{}
+
+	// number of items to be added to the lookup table
+	addCount := 2
+	// number of items to be retrieved from the lookup table
+	getCount := 2
+
+	// the number of retrieved items should not exceed the number of added items
+	require.LessOrEqual(t, getCount, addCount)
+
+	wg := sync.WaitGroup{}
+	wg.Add(addCount + getCount)
+
+	for i := 0; i < addCount; i++ {
+		// add some identities concurrently to the lookup table
+		go func() {
+			defer wg.Done()
+			identity := unittest.IdentityFixture(t)
+			err := lt.AddEntry(skipgraph.LeftDirection, skipgraph.Level(i), identity)
+			require.NoError(t, err)
+		}()
+	}
+	for i := 0; i < getCount; i++ {
+		// retrieve some identities concurrently from the lookup table
+		go func() {
+			defer wg.Done()
+			_, err := lt.GetEntry(skipgraph.LeftDirection, skipgraph.Level(i))
+			require.NoError(t, err)
+		}()
+	}
+
+	// check whether all the routines are finished
+	// wait 2 milliseconds for each routine to finish
+	unittest.CallMustReturnWithinTimeout(t, wg.Wait, time.Duration((getCount+addCount)*2)*time.Millisecond, "concurrent access to lookup table failed")
 }
