@@ -17,7 +17,7 @@ type Underlay interface {
 	// SetMessageHandler determines the handler of a message based on its message type.
 	SetMessageHandler(messages.Type, MessageHandler) error
 
-	// Send sends a message to a target recipient in the underlying network.
+	// Send sends a message to a target recipient in the underlying network if the underlay is not stopped.
 	Send(messages.Message, skipgraph.Identifier) error
 }
 
