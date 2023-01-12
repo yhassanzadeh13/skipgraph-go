@@ -1,6 +1,7 @@
 package mocknet
 
 import (
+	"errors"
 	"fmt"
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
 	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
@@ -14,10 +15,12 @@ type MockUnderlay struct {
 	// there is only one handler per message type (but not per caller)
 	messageHandlers map[messages.Type]network.MessageHandler
 	stub            *NetworkStub
+	// active indicates whether the underlay is stopped or not
+	active bool
 }
 
 // NewMockUnderlay initializes an empty MockUnderlay and returns a pointer to it
-func newMockUnderlay(stub *NetworkStub) *MockUnderlay {
+func NewMockUnderlay(stub *NetworkStub) *MockUnderlay {
 	return &MockUnderlay{
 		stub:            stub,
 		messageHandlers: make(map[messages.Type]network.MessageHandler),
@@ -34,12 +37,22 @@ func (m *MockUnderlay) SetMessageHandler(msgType messages.Type, handler network.
 	if ok {
 		return fmt.Errorf("a handler exists for the attempted message type: %s", msgType)
 	}
-	m.messageHandlers[msgType] = handler
+	// wrap the handler inside another one that checks whether the underlay is active
+	m.messageHandlers[msgType] = func(message messages.Message) error {
+		if !m.active {
+			return InactiveUnderlayError
+		}
+		handler(message)
+		return nil
+	}
 	return nil
 }
 
 // Send sends a message to a list of target recipients in the underlying network.
 func (m *MockUnderlay) Send(msg messages.Message, target skipgraph.Identifier) error {
+	if !m.active {
+		return InactiveUnderlayError
+	}
 	m.l.Lock()
 	defer m.l.Unlock()
 
@@ -50,6 +63,8 @@ func (m *MockUnderlay) Send(msg messages.Message, target skipgraph.Identifier) e
 func (m *MockUnderlay) Start() <-chan interface{} {
 	ch := make(chan interface{})
 	close(ch)
+	// mark the underlay as active
+	m.active = true
 	return ch
 }
 
@@ -57,5 +72,9 @@ func (m *MockUnderlay) Start() <-chan interface{} {
 func (m *MockUnderlay) Stop() <-chan interface{} {
 	ch := make(chan interface{})
 	close(ch)
+	// mark the underlay as inactive
+	m.active = false
 	return ch
 }
+
+var InactiveUnderlayError = errors.New("underlay is not active")
