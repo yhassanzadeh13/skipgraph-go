@@ -42,8 +42,7 @@ func (m *MockUnderlay) SetMessageHandler(msgType messages.Type, handler network.
 		if !m.active {
 			return InactiveUnderlayError
 		}
-		handler(message)
-		return nil
+		return handler(message)
 	}
 	return nil
 }
