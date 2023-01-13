@@ -77,4 +77,10 @@ func (m *MockUnderlay) Stop() <-chan interface{} {
 	return ch
 }
 
+// InactiveUnderlayError indicates an error regarding an attempt to use an inactive underlay.
 var InactiveUnderlayError = errors.New("underlay is not active")
+
+// IsInactiveUnderlayError checks whether the supplied error is an InactiveUnderlayError.
+func IsInactiveUnderlayError(err error) bool {
+	return errors.Is(err, InactiveUnderlayError)
+}
