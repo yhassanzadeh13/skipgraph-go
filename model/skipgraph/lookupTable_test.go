@@ -59,6 +59,7 @@ func TestLookupTable_OverWriteLeftEntry(t *testing.T) {
 	// check that the new identity has overwritten the previous one
 	retIdentity, err := lt.GetEntry(skipgraph.LeftDirection, 0)
 	require.Equal(t, identity1, retIdentity)
+	require.NoError(t, err)
 }
 
 // TestLookupTable_OverWriteRightEntry test the overwriting of right entry in the lookup table.
@@ -86,6 +87,7 @@ func TestLookupTable_OverWriteRightEntry(t *testing.T) {
 	// check that the new identity has overwritten the previous one
 	retIdentity, err := lt.GetEntry(skipgraph.RightDirection, 0)
 	require.Equal(t, identity1, retIdentity)
+	require.NoError(t, err)
 }
 
 // TestLookupTable_GetEntry test the GetEntry method of LookupTable.
@@ -108,10 +110,12 @@ func TestLookupTable_GetEntry(t *testing.T) {
 
 	// check that the inserted identity is retrievable
 	retIdentity, err := lt.GetEntry(skipgraph.LeftDirection, 0)
+	require.NoError(t, err)
 	require.Equal(t, identity, retIdentity)
 
 	// check that the inserted identity is retrievable
 	retIdentity1, err := lt.GetEntry(skipgraph.RightDirection, 0)
+	require.NoError(t, err)
 	require.Equal(t, identity1, retIdentity1)
 
 	// access a wrong level
@@ -142,18 +146,20 @@ func TestLookupTable_Concurrency(t *testing.T) {
 
 	for i := 0; i < addCount; i++ {
 		// add some identities concurrently to the lookup table
+		j := i
 		go func() {
 			defer wg.Done()
 			identity := unittest.IdentityFixture(t)
-			err := lt.AddEntry(skipgraph.LeftDirection, skipgraph.Level(i), identity)
+			err := lt.AddEntry(skipgraph.LeftDirection, skipgraph.Level(j), identity)
 			require.NoError(t, err)
 		}()
 	}
 	for i := 0; i < getCount; i++ {
 		// retrieve some identities concurrently from the lookup table
+		j := i
 		go func() {
 			defer wg.Done()
-			_, err := lt.GetEntry(skipgraph.LeftDirection, skipgraph.Level(i))
+			_, err := lt.GetEntry(skipgraph.LeftDirection, skipgraph.Level(j))
 			require.NoError(t, err)
 		}()
 	}
