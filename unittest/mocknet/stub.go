@@ -82,7 +82,7 @@ func isCouldNotHandleMessageError(err error) bool {
 
 // NoHandlerExistError indicates absence of a handler for a message type.
 type NoHandlerExistError struct {
-	msgType string
+	msgType messages.Type
 }
 
 // Error implements the Error interface for NoHandlerExistError.
