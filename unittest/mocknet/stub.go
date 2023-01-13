@@ -73,9 +73,9 @@ func (e NoMockUnderlayError) Error() string {
 	return fmt.Sprintf("no mock underlay exists for %x", e.identifier)
 }
 
-// isCouldNotHandleMessageError checks whether err is of the type CouldNotHandleMessageError.
-func isCouldNotHandleMessageError(err error) bool {
-	return errors.As(err, &CouldNotHandleMessageError{})
+// isNoMockUnderlayError checks whether err is of the type NoMockUnderlayError.
+func isNoMockUnderlayError(err error) bool {
+	return errors.As(err, &NoMockUnderlayError{})
 }
 
 // ======================
