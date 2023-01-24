@@ -67,6 +67,7 @@ func (n *node) addLookUpEntry(message messages.Message) error {
 
 	return nil
 }
+
 func (n *node) Start() {
 	// set up node's underlay.
 	// add a handler for add lookup entry `AddEntry` message type.

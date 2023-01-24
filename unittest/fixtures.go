@@ -76,3 +76,9 @@ func IdentityFixture(t *testing.T) skipgraph.Identity {
 	identity := skipgraph.NewIdentity(id, memVec, addr)
 	return identity
 }
+
+// LevelFixture returns a random level within the range [0, maxLevel].
+func LevelFixture(t *testing.T) skipgraph.Level {
+	return skipgraph.Level(rand.Intn(int(skipgraph.MaxLookupTableLevel)))
+}
+
