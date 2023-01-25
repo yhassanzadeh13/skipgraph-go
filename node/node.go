@@ -1,29 +1,30 @@
-package skipgraph
+package node
 
 import (
 	"encoding/json"
 	"fmt"
 	"github/yhassanzadeh13/skipgraph-go/model/messages"
+	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 	"github/yhassanzadeh13/skipgraph-go/network"
 )
 
 type node struct {
 	// Identity is the identity of the node.
-	Identity Identity
+	Identity skipgraph.Identity
 	// LookupTable is the lookup table of the node.
-	LookupTable LookupTable
+	LookupTable skipgraph.LookupTable
 	// Underlay is the underlay network of the node.
 	Underlay network.Underlay
 }
 
 // LookupQuery holds a node Identity and its metadata reflecting its location in a lookup table.
 type LookupQuery struct {
-	Identity
+	skipgraph.Identity
 	EntryPosition
 }
 type EntryPosition struct {
-	Direction
-	Level
+	skipgraph.Direction
+	skipgraph.Level
 }
 
 // JSONToLookUPQuery parses a JSON string to a LookupQuery struct.
@@ -68,6 +69,7 @@ func (n *node) addLookUpEntry(message messages.Message) error {
 	return nil
 }
 
+// Start activates the node.
 func (n *node) Start() {
 	// set up node's underlay.
 	// add a handler for add lookup entry `AddEntry` message type.
@@ -75,6 +77,7 @@ func (n *node) Start() {
 	n.Underlay.Start()
 }
 
+// Stop deactivates the node.
 func (n *node) Stop() {
 	// stop the node's underlay.
 	n.Underlay.Stop()
