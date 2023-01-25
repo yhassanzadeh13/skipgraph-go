@@ -21,7 +21,7 @@ const (
 	LeftDirection = Direction("left")
 )
 
-// LookupTable corresponds to a SkipGraph node's lookup table.
+// LookupTable  is a is thread-safe data structure representing a SkipGraph node's lookup table.
 type LookupTable struct {
 	lock           sync.RWMutex // used to lock the lookup table for read and write
 	rightNeighbors [MaxLookupTableLevel]Identity
