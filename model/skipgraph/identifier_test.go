@@ -1,9 +1,10 @@
 package skipgraph_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"github/yhassanzadeh13/skipgraph-go/model/skipgraph"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 // TestCompare checks the correctness of the Identifier comparison function
@@ -21,5 +22,4 @@ func TestCompare(t *testing.T) {
 	require.Equal(t, skipgraph.CompareLess, i1.Compare(i2))
 	require.Equal(t, skipgraph.CompareGreater, i2.Compare(i1))
 	require.Equal(t, skipgraph.CompareEqual, i1.Compare(i3))
-
 }
