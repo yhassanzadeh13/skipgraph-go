@@ -25,6 +25,7 @@ type Connection interface {
 	Next() ([]byte, error)
 
 	// Close gracefully closes the connection. Blocking until the connection is closed.
+	// No error is expected under normal circumstances.
 	Close() error
 }
 
@@ -34,4 +35,8 @@ type ConnectionManager interface {
 	// If the connection is already established, it returns the cached connection.
 	// The cardinal assumption is there is always at most one connection to a remote peer.
 	Connect(context.Context, skipgraph.Identifier) (Connection, error)
+
+	// Close closes all connections.
+	// No error is expected under normal circumstances.
+	Close() error
 }
