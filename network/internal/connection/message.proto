@@ -1,0 +1,11 @@
+
+message Message {
+  // The data of the message.
+  required bytes data = 1;
+
+  // Identifier of the sender of the message.
+  required string sender = 2;
+
+  // send timestamp of the message at the sender.
+  required string timestamp = 3;
+}
