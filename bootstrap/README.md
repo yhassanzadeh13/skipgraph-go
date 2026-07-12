@@ -225,6 +225,6 @@ Note: These are approximate values; actual performance depends on hardware.
 
 ## References
 
-- [Skip Graphs Paper](../docs/skip-graphs-journal.pdf) - Original academic paper
+- [Skip Graphs Paper — Aspnes & Shah (arXiv:cs/0306043)](https://arxiv.org/abs/cs/0306043) - Original academic paper
 - [Skip Graph Wikipedia](https://en.wikipedia.org/wiki/Skip_graph) - General overview
 - [Project Documentation](../README.md) - Main project documentation
